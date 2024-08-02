@@ -4,9 +4,9 @@
 
 ## Requirements
 
-```bash
-pip install pandas
-pip install openpyxl
-pip install xlrd
-pip install cuid2
+```shell
+$ pip install pandas
+$ pip install openpyxl
+$ pip install xlrd
+$ pip install cuid2
 ```
