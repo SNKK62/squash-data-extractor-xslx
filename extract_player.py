@@ -48,6 +48,8 @@ with open(UNIV_FILE) as uf:
 
 print(univ_data)
 
+tournament_id = input("トーナメントIDを入力してください: ")
+
 PLAYER_FILE = 'players.json'
 with open(PLAYER_FILE, 'w') as f:
     f.write('[')
@@ -63,6 +65,8 @@ with open(PLAYER_FILE, 'w') as f:
         f.write('    "grade": ' + str(row["年次"]) + ',')
         next_line(f)
         f.write('    "universityId": ' + str(univ_data[row["大学名"]]["id"]) + ',')
+        next_line(f)
+        f.write('    "tournamentId": ' + '"' + tournament_id + '"' + ',')
         next_line(f)
         f.write('    "sex": "男子",')
         next_line(f)
@@ -82,6 +86,8 @@ with open(PLAYER_FILE, 'w') as f:
         f.write('    "grade": ' + str(row["年次"]) + ',')
         next_line(f)
         f.write('    "universityId": ' + str(univ_data[row["大学名"]]["id"]) + ',')
+        next_line(f)
+        f.write('    "tournamentId": ' + '"' + tournament_id + '"' + ',')
         next_line(f)
         f.write('    "sex": "女子",')
         next_line(f)
