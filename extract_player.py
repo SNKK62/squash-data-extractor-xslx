@@ -58,9 +58,9 @@ with open(PLAYER_FILE, 'w') as f:
     for i, row in male.iterrows():
         f.write('  {')
         next_line(f)
-        f.write('    "firstName": "' + row["選手名"].split(" ")[1] + '",')
+        f.write('    "firstName": "' + "　".join(row["選手名"].split(" ")).split("　")[1] + '",')
         next_line(f)
-        f.write('    "lastName": "' + row["選手名"].split(" ")[0] + '",')
+        f.write('    "lastName": "' + "　".join(row["選手名"].split(" ")).split("　")[0] + '",')
         next_line(f)
         f.write('    "grade": ' + str(row["年次"]) + ',')
         next_line(f)
@@ -79,9 +79,9 @@ with open(PLAYER_FILE, 'w') as f:
     for i, row in female.iterrows():
         f.write('  {')
         next_line(f)
-        f.write('    "firstName": "' + row["選手名"].split(" ")[1] + '",')
+        f.write('    "firstName": "' + "　".join(row["選手名"].split(" ")).split("　")[1] + '",')
         next_line(f)
-        f.write('    "lastName": "' + row["選手名"].split(" ")[0] + '",')
+        f.write('    "lastName": "' + "　".join(row["選手名"].split(" ")).split("　")[0] + '",')
         next_line(f)
         f.write('    "grade": ' + str(row["年次"]) + ',')
         next_line(f)
