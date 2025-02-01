@@ -46,7 +46,7 @@ with open(UNIV_FILE) as uf:
 
             univ_data[name] = univ
 
-print(univ_data)
+# print(univ_data)
 
 tournament_id = input("トーナメントIDを入力してください: ")
 

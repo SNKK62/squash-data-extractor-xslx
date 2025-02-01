@@ -8,7 +8,11 @@ __pycache__/
 
 # data
 *.csv
+*.xlsx
 *.json
+!universities_origin.json
+
+.DS_Store
 
 # Distribution / packaging
 .Python
