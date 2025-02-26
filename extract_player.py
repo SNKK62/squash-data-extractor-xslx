@@ -1,38 +1,44 @@
 import pandas as pd
+from typing import cast
 
-male = pd.read_excel('players.xlsx', sheet_name="Sheet1", index_col=0)
-female = pd.read_excel('players.xlsx', sheet_name="Sheet2", index_col=0)
+male = pd.read_excel("players.xlsx", sheet_name="Sheet1", index_col=0)
+female = pd.read_excel("players.xlsx", sheet_name="Sheet2", index_col=0)
+
 
 def next_line(f):
-    f.write('\n')
+    f.write("\n")
 
-UNIV_FILE = 'universities.json'
+
+UNIV_FILE = "universities.json"
+
 
 def is_str(s):
     return s.startswith('"') and s.endswith('"')
 
+
 def remove_quote(s):
     return s[1:-1]
+
 
 univ_data = {}
 
 with open(UNIV_FILE) as uf:
     while True:
-        name = ''
+        name = ""
         line = uf.readline().strip()
-        if line == '[':
+        if line == "[":
             continue
-        elif line == ']':
+        elif line == "]":
             break
-        elif line == '{':
+        elif line == "{":
             univ = {}
             while True:
                 line = uf.readline().strip()
-                if line.startswith('}'):
+                if line.startswith("}"):
                     break
-                if line.endswith(','):
+                if line.endswith(","):
                     line = line[:-1]
-                key, value = line.split(':')
+                key, value = line.split(":")
                 key = remove_quote(key.strip())
                 value = value.strip()
 
@@ -42,7 +48,7 @@ with open(UNIV_FILE) as uf:
                     if key == "name":
                         name = value
                 else:
-                    univ[key] = int(value)
+                    univ[key] = int(value)  # type: ignore
 
             univ_data[name] = univ
 
@@ -50,52 +56,68 @@ with open(UNIV_FILE) as uf:
 
 tournament_id = input("トーナメントIDを入力してください: ")
 
-PLAYER_FILE = 'players.json'
-with open(PLAYER_FILE, 'w') as f:
-    f.write('[')
+PLAYER_FILE = "players.json"
+with open(PLAYER_FILE, "w") as f:
+    f.write("[")
     next_line(f)
 
     for i, row in male.iterrows():
-        f.write('  {')
+        f.write("  {")
         next_line(f)
-        f.write('    "firstName": "' + "　".join(row["選手名"].split(" ")).split("　")[1] + '",')
+        f.write(
+            '    "firstName": "'
+            + "　".join(cast(str, row["選手名"]).split(" ")).split("　")[1]
+            + '",'
+        )
         next_line(f)
-        f.write('    "lastName": "' + "　".join(row["選手名"].split(" ")).split("　")[0] + '",')
+        f.write(
+            '    "lastName": "'
+            + "　".join(cast(str, row["選手名"]).split(" ")).split("　")[0]
+            + '",'
+        )
         next_line(f)
-        f.write('    "grade": ' + str(row["年次"]) + ',')
+        f.write('    "grade": ' + str(row["年次"]) + ",")
         next_line(f)
-        f.write('    "universityId": ' + str(univ_data[row["大学名"]]["id"]) + ',')
+        f.write('    "universityId": ' + str(univ_data[row["大学名"]]["id"]) + ",")
         next_line(f)
-        f.write('    "tournamentId": ' + '"' + tournament_id + '"' + ',')
+        f.write('    "tournamentId": ' + '"' + tournament_id + '"' + ",")
         next_line(f)
         f.write('    "sex": "男子",')
         next_line(f)
         f.write('    "isRetired": false')
         next_line(f)
-        f.write('  }')
-        f.write(',')
+        f.write("  }")
+        f.write(",")
         next_line(f)
 
     for i, row in female.iterrows():
-        f.write('  {')
+        f.write("  {")
         next_line(f)
-        f.write('    "firstName": "' + "　".join(row["選手名"].split(" ")).split("　")[1] + '",')
+        f.write(
+            '    "firstName": "'
+            + "　".join(cast(str, row["選手名"]).split(" ")).split("　")[1]
+            + '",'
+        )
         next_line(f)
-        f.write('    "lastName": "' + "　".join(row["選手名"].split(" ")).split("　")[0] + '",')
+        f.write(
+            '    "lastName": "'
+            + "　".join(cast(str, row["選手名"]).split(" ")).split("　")[0]
+            + '",'
+        )
         next_line(f)
-        f.write('    "grade": ' + str(row["年次"]) + ',')
+        f.write('    "grade": ' + str(row["年次"]) + ",")
         next_line(f)
-        f.write('    "universityId": ' + str(univ_data[row["大学名"]]["id"]) + ',')
+        f.write('    "universityId": ' + str(univ_data[row["大学名"]]["id"]) + ",")
         next_line(f)
-        f.write('    "tournamentId": ' + '"' + tournament_id + '"' + ',')
+        f.write('    "tournamentId": ' + '"' + tournament_id + '"' + ",")
         next_line(f)
         f.write('    "sex": "女子",')
         next_line(f)
         f.write('    "isRetired": false')
         next_line(f)
-        f.write('  }')
+        f.write("  }")
         if i != len(female):
-            f.write(',')
+            f.write(",")
         next_line(f)
 
-    f.write(']')
+    f.write("]")
